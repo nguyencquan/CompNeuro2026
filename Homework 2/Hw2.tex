@@ -1,0 +1,95 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage[margin=.5in]{geometry}
+
+
+\title{Homework 2}
+\author{Quan Nguyen}
+\date{September 2026}
+
+\begin{document}
+\maketitle
+\section{Question 1: Passive spread and active propogation on a cable}
+\textbf{a)} If we take the partial derivatives for $v = e^{-t}u$ we get:
+
+
+\begin{align}
+    v_t &= e^{-t}u_t - e^{-t}u\\
+    v_x &= e^{-t}u_x\\
+    v_{xx} &= e^{-t}u_{xx} \\
+\end{align}
+
+Substituting this into the original equation:
+\begin{align}
+    e^{-t}u_t - e^{-t}u &= De^{-t}u_{xx} - e^{-t}u\\
+    u_t - u &= Du_{xx} - u\\
+    u_t &= Du_{xx}
+\end{align}
+
+Which according to Wikipedia \url{https://en.wikipedia.org/wiki/Heat_equation} is the heat equation. A fundamental solution to this equation if we have an impulse at t=0 is:
+
+$$
+u(x,t) = \frac{1}{\sqrt{4\pi Dt}}exp\left[ - \frac{x^2}{4Dt}\right]
+$$
+Which implies
+
+$$
+v(x,t) = \frac{e^{-t}}{\sqrt{4\pi Dt}}exp\left[ - \frac{x^2}{4Dt}\right]
+$$
+
+Now taking a bunch of derivatives to substitute it in again. However due to a lot of exponentials,
+the log is taken to simplify
+
+\begin{align}
+    v(x,t) &= \frac{e^{-t}}{\sqrt{4\pi Dt}} \exp\left[- \frac{x^2}{4Dt}\right]\\
+    \ln[v] &= -t - ln[\sqrt{4 \pi D t}] - \frac{x^2}{4Dt}\\
+    \frac{v_t}{v} &= -1 - \frac{4\pi D}{8\pi D t} + \frac{x^2}{4Dt^2}\\
+    &= v\left(-1 - \frac{1}{2t} + \frac{x^2}{4Dt^2}\right)\\
+    v_t &= \frac{e^{-t}}{\sqrt{4\pi Dt}} \exp\left[- \frac{x^2}{4Dt}\right]\left(-1 - \frac{1}{2t} + \frac{x^2}{4Dt^2}\right)\\
+    v_x &= \frac{-xe^{-t}}{2Dt\sqrt{4\pi Dt}} \exp\left[- \frac{x^2}{4Dt}\right]\\
+    &= \frac{-xv(x,t)}{2Dt}\\
+    v_{xx} &= \frac{x^2e^{-t}}{4D^2t^2\sqrt{4\pi Dt}} \exp\left[- \frac{x^2}{4Dt}\right]
+    + \frac{-e^{-t}}{2Dt\sqrt{4\pi Dt}} \exp\left[- \frac{x^2}{4Dt}\right]\\
+    &= \frac{x^2v(x,t)}{4D^2t^2} + \frac{-v(x,t)}{2Dt}\\
+\end{align}
+
+Substituting this into the original equation, note I will substitute in a way that keeps $v(x,t)$
+as it makes it a lot easier.
+
+\begin{align}
+    v\left(-1 - \frac{1}{2 t} + \frac{x^2}{4Dt^2}\right) &= D\left(\frac{x^2v(x,t)}{4D^2t^2} + \frac{-v(x,t)}{2Dt}\right) - v(x,t)\\
+    -1 - \frac{1}{2t} + \frac{x^2}{4Dt^2} &= \frac{x^2}{4Dt^2} + \frac{1}{2t} - 1\\
+\end{align}
+
+To maximize voltage at some x, we look at the original equation, take a partial with respect
+to t and then solve for t when the partial equals 0.
+
+\begin{align}
+    0 &= v(x,t)\left(-1 - \frac{1}{2t} + \frac{x^2}{4Dt^2}\right)
+\end{align}
+
+There are two ways that the above equation can be solved, either the voltage has to equal 0 or the
+right term has to equal 0. Looking at the equation for $(v,t)$, there is no t that forces the equation to equal 0.
+If we look at the right side however.
+\begin{align}
+    0 &= -1 - \frac{1}{2t} + \frac{x^2}{4Dt^2}\\
+    1 &= \frac{x^2-2Dt}{4Dt^2}\\
+    4Dt^2 + 2Dt - x^2 &= 0\\
+\end{align}
+Putting it into the quadratic equation:
+\begin{align}
+    t &= \frac{-2D \pm \sqrt{4D^2 + 16Dx^2}}{8D}\\
+&=\frac{-1}{4} \pm \frac{\sqrt{4D^2(1+\frac{4x^2}{D})}}{8D}\\
+&=\frac{-1}{4} \pm \frac{\sqrt{(1+\frac{4x^2}{D})}}{4}\\
+&= \frac{1}{4}\left[\pm \sqrt{(1+\frac{4x^2}{D})}-1\right]
+\end{align}
+
+However we know the impulse occurs at $t=0$ hence time cannot be negative yielding
+\[
+t_{max} = \frac{1}{4}\left[\sqrt{(1+\frac{4x^2}{D})}-1\right]
+\]
+
+
+\end{document}
